@@ -23,15 +23,16 @@ elapsedMillis timeElapsed;
 const int SF = 9;   //check that this is appropriate
 const long bw = 125E3;    //check that this is appropriate
 
-const int pollerID = 1;
-const int noResponders = 3;
-char responderIDs[noResponders][4] = {
-                                      {'0','1','1','\0'},
-                                      {'0','1','2','\0'},
-                                      {'0','1','3','\0'}
+//const int pollerID = 1;
+const char pollerID[] = "01";
+//const int noResponders = 3;
+const char responderIDs[] = {
+                                      {'1'},
+                                      {'2'},
+                                      {'3'}
                                       };
-char activeResponders[noResponders][4];
-char activeResponderId[4];
+char activeResponders[noResponders][];
+char activeResponderId;
 char ackMessage[40];
 char message[40];
 int counter = 1;
@@ -78,8 +79,7 @@ void loop() {
    
   int activeResponderAck[noResponders];
   
-  timeElapsed = 0;
-  if (timeElapsed < 5000) {
+  if (runEvery(5000)) {
     for (int i = 0; strlen(activeResponders[i]) > 0; i++) {
 
       
@@ -198,4 +198,14 @@ void handleSerial() {
       break;
     }
  }
+}
+
+boolean runEvery(unsigned long interval) {
+  static unsigned long previousMillis = 0;
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+    return true;
+  }
+  return false;
 }
