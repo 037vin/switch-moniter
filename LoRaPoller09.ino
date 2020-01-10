@@ -24,14 +24,10 @@ const int SF = 9;   //check that this is appropriate
 const long bw = 125E3;    //check that this is appropriate
 
 //const int pollerID = 1;
-const char pollerID[] = "01";
-//const int noResponders = 3;
-const char responderIDs[] = {
-                                      {'1'},
-                                      {'2'},
-                                      {'3'}
-                                      };
-char activeResponders[noResponders][];
+const char pollerID[] = {{'0'},{'1'}};
+const int noResponders = 3;
+const char responderIDs[] = {{'1'},{'2'},{'3'}};
+char activeResponders[noResponders];
 char activeResponderId;
 char ackMessage[40];
 char message[40];
